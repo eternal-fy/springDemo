@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ld.dao.StudentDao">
+
+    <sql id="tableColumn">
+        sco,name,age,gender,clazz
+    </sql>
+    <insert id="addStudent" >
+      insert into student(
+      <include refid="tableColumn"></include>
+      )
+        value (#{sco},#{name},#{age},#{gender},#{clazz})
+    </insert>
+    <select id="queryAllStudents" resultType="Student">
+        select
+        <include refid="tableColumn"></include>
+        from student
+    </select>
+    <select id="getSpecial" parameterType="list" resultType="map">
+        select
+        <foreach collection="strings" item="item" separator=",">
+            ${item} as #{item}
+        </foreach>
+        from student
+        <if test="flag != 1">
+            limit 1
+         </if>
+    </select>
+
+
+</mapper>
